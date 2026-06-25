@@ -2,7 +2,7 @@
 
 Matoujie is a clean, elegant Typora theme designed by HAE. It focuses on a calm, high-readability editing experience with warm, restrained colors.
 
-[View Theme Showcase](index.html)
+[View Theme Showcase](https://HAE8939.github.io/typora-theme/)
 
 ## Features
 
