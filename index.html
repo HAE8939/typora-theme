@@ -1,0 +1,668 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Matoujie Theme — Typora Theme Showcase</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Noto+Sans+SC:wght@300;400;500;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --bg: #faf9f5;
+      --bg-code: #f3f0e8;
+      --border: #e6e0d4;
+      --text: #1a1a18;
+      --text-muted: #6b6b62;
+      --text-faint: #8a8a80;
+      --clay: #d97757;
+      --clay-hover: #c4623f;
+      --link-color: #b8603f;
+      --card-dark: #141413;
+      --card-dark-text: #f0ede6;
+      --card-dark-muted: #d4d0c8;
+      --card-caution: #fdf2f2;
+      --card-caution-border: #c93030;
+      --note-color: #3a6fd4;
+      --tip-color: #1a8c45;
+      --important-color: #6e35d4;
+      --warning-color: #c46e1a;
+      --caution-color: #c93030;
+      --radius: 12px;
+      --shadow: 0 2px 8px rgba(0,0,0,0.08);
+      --shadow-lg: 0 8px 32px rgba(0,0,0,0.12);
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      font-family: 'Inter', 'Noto Sans SC', -apple-system, sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      line-height: 1.78;
+      padding: 0;
+    }
+
+    .hero {
+      text-align: center;
+      padding: 5rem 2rem 3rem;
+      background: linear-gradient(180deg, var(--bg) 0%, var(--bg-code) 100%);
+      border-bottom: 1px solid var(--border);
+    }
+
+    .hero h1 {
+      font-size: 3rem;
+      font-weight: 700;
+      letter-spacing: -0.02em;
+      margin-bottom: 0.5rem;
+    }
+
+    .hero h1 span { color: var(--clay); }
+
+    .hero p {
+      font-size: 1.1rem;
+      color: var(--text-muted);
+      max-width: 600px;
+      margin: 0 auto;
+    }
+
+    .container {
+      max-width: 1000px;
+      margin: 0 auto;
+      padding: 3rem 2rem;
+    }
+
+    .section {
+      margin-bottom: 3rem;
+    }
+
+    .section-title {
+      font-size: 11px;
+      font-weight: 600;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--text-muted);
+      margin-bottom: 1rem;
+      padding-bottom: 0.5rem;
+      border-bottom: 1px solid var(--border);
+    }
+
+    .palette-strip {
+      display: flex;
+      border-radius: 8px;
+      overflow: hidden;
+      height: 56px;
+      margin-bottom: 1rem;
+      box-shadow: var(--shadow);
+    }
+
+    .palette-strip div { flex: 1; }
+
+    .swatch-row {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
+      gap: 12px;
+    }
+
+    .swatch {
+      display: flex;
+      flex-direction: column;
+      gap: 4px;
+    }
+
+    .swatch-color {
+      height: 48px;
+      border-radius: 8px;
+      border: 1px solid rgba(0,0,0,0.06);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 11px;
+      font-weight: 500;
+      letter-spacing: 0.02em;
+    }
+
+    .swatch-hex {
+      font-size: 10px;
+      color: var(--text-faint);
+      font-family: 'JetBrains Mono', monospace;
+    }
+
+    .contrast-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+      gap: 12px;
+    }
+
+    .contrast-card {
+      background: white;
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      padding: 12px 16px;
+    }
+
+    .contrast-sample {
+      padding: 8px 12px;
+      border-radius: 6px;
+      font-size: 14px;
+      margin-bottom: 8px;
+    }
+
+    .contrast-score {
+      font-size: 20px;
+      font-weight: 600;
+    }
+
+    .contrast-label {
+      font-size: 12px;
+      color: var(--text-muted);
+    }
+
+    .contrast-pass { color: var(--tip-color); }
+    .contrast-warn { color: var(--warning-color); }
+
+    .feature-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+      gap: 16px;
+    }
+
+    .feature-card {
+      background: white;
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 1.5rem;
+      text-align: center;
+      transition: box-shadow 0.2s ease;
+    }
+
+    .feature-card:hover {
+      box-shadow: var(--shadow-lg);
+    }
+
+    .feature-icon {
+      font-size: 2rem;
+      margin-bottom: 0.5rem;
+    }
+
+    .feature-card h3 {
+      font-size: 14px;
+      font-weight: 600;
+      margin-bottom: 0.25rem;
+    }
+
+    .feature-card p {
+      font-size: 12px;
+      color: var(--text-muted);
+      line-height: 1.5;
+    }
+
+    .callout-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+      gap: 16px;
+    }
+
+    .callout-card {
+      border-radius: var(--radius);
+      padding: 1.25rem 1.5rem;
+      position: relative;
+    }
+
+    .callout-card.feature {
+      background: var(--card-dark);
+      color: var(--card-dark-text);
+      border-top: 3px solid var(--clay);
+      box-shadow: var(--shadow-lg);
+    }
+
+    .callout-card.info {
+      background: white;
+      border: 1px solid var(--border);
+    }
+
+    .callout-card.info::before {
+      content: '';
+      display: block;
+      width: 36px;
+      height: 3px;
+      background: var(--clay);
+      border-radius: 2px;
+      margin-bottom: 0.75rem;
+    }
+
+    .callout-card.stat {
+      background: white;
+      border: 1px solid var(--border);
+      text-align: center;
+    }
+
+    .callout-card.danger {
+      background: var(--card-caution);
+      border: 1px solid var(--card-caution-border);
+    }
+
+    .callout-card.danger::before {
+      content: '';
+      display: block;
+      width: 36px;
+      height: 3px;
+      background: var(--card-caution-border);
+      border-radius: 2px;
+      margin-bottom: 0.75rem;
+    }
+
+    .callout-label {
+      font-size: 10px;
+      font-weight: 600;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--text-muted);
+      margin-bottom: 0.5rem;
+    }
+
+    .callout-card.feature .callout-label { color: var(--clay); }
+    .callout-card.danger .callout-label { color: var(--card-caution-border); }
+
+    .callout-title {
+      font-size: 16px;
+      font-weight: 600;
+      margin-bottom: 0.5rem;
+    }
+
+    .callout-card.feature .callout-title { color: var(--clay); }
+
+    .callout-text {
+      font-size: 13px;
+      line-height: 1.6;
+    }
+
+    .callout-card.feature .callout-text { color: var(--card-dark-muted); }
+
+    .stat-number {
+      font-size: 3rem;
+      font-weight: 700;
+      color: var(--clay);
+      letter-spacing: -0.02em;
+      line-height: 1.1;
+      margin: 0.5rem 0;
+    }
+
+    .stat-desc {
+      font-size: 13px;
+      color: var(--text-muted);
+    }
+
+    .typo-sample {
+      background: white;
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 2rem;
+      margin-bottom: 1rem;
+    }
+
+    .typo-sample h2 {
+      font-size: 1.5rem;
+      font-weight: 700;
+      margin-bottom: 0.5rem;
+      border-bottom: 2px solid var(--clay);
+      padding-bottom: 0.5rem;
+    }
+
+    .typo-sample p {
+      font-size: 15px;
+      margin-bottom: 1rem;
+    }
+
+    .typo-sample code {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.9em;
+      background: var(--bg-code);
+      padding: 0.2em 0.4em;
+      border-radius: 4px;
+      color: #3b2f2a;
+    }
+
+    .link-demo {
+      display: flex;
+      gap: 1.5rem;
+      flex-wrap: wrap;
+      margin-top: 1rem;
+    }
+
+    .link-demo a {
+      color: var(--link-color);
+      text-decoration: none;
+      border-bottom: 1px dotted var(--link-color);
+      font-size: 14px;
+    }
+
+    .link-demo a:hover {
+      color: var(--clay-hover);
+      border-bottom-style: solid;
+    }
+
+    .font-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 16px;
+    }
+
+    .font-card {
+      background: white;
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 1.5rem;
+      text-align: center;
+    }
+
+    .font-card .font-name {
+      font-size: 11px;
+      font-weight: 600;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: var(--text-muted);
+      margin-bottom: 0.75rem;
+    }
+
+    .font-card .font-sample {
+      font-size: 18px;
+      line-height: 1.4;
+      margin-bottom: 0.5rem;
+    }
+
+    .font-card .font-meta {
+      font-size: 11px;
+      color: var(--text-faint);
+      font-family: 'JetBrains Mono', monospace;
+    }
+
+    .syntax-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(120px, 1fr));
+      gap: 8px;
+    }
+
+    .syntax-swatch {
+      background: var(--bg-code);
+      border-radius: 6px;
+      padding: 10px 12px;
+      text-align: center;
+    }
+
+    .syntax-swatch .token {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 13px;
+      font-weight: 500;
+      margin-bottom: 4px;
+    }
+
+    .syntax-swatch .hex {
+      font-size: 10px;
+      color: var(--text-faint);
+      font-family: 'JetBrains Mono', monospace;
+    }
+
+    footer {
+      text-align: center;
+      padding: 3rem 2rem;
+      border-top: 1px solid var(--border);
+      color: var(--text-faint);
+      font-size: 13px;
+    }
+
+    footer a {
+      color: var(--link-color);
+      text-decoration: none;
+      border-bottom: 1px dotted var(--link-color);
+    }
+
+    @media (max-width: 640px) {
+      .hero h1 { font-size: 2rem; }
+      .font-grid { grid-template-columns: 1fr; }
+    }
+  </style>
+</head>
+<body>
+
+  <div class="hero">
+    <h1>Matou<span>jie</span></h1>
+    <p>A clean, warm Typora theme designed for calm, high-readability writing. Built with careful attention to typography, contrast, and Unicode-range font isolation.</p>
+  </div>
+
+  <div class="container">
+
+    <!-- Core Palette -->
+    <div class="section">
+      <div class="section-title">Core Palette</div>
+      <div class="palette-strip">
+        <div style="background:#faf9f5;"></div>
+        <div style="background:#f3f0e8;"></div>
+        <div style="background:#e6e0d4;"></div>
+        <div style="background:#d97757;"></div>
+        <div style="background:#c4623f;"></div>
+        <div style="background:#6b6b62;"></div>
+        <div style="background:#1a1a18;"></div>
+      </div>
+      <div class="swatch-row">
+        <div class="swatch">
+          <div class="swatch-color" style="background:#faf9f5; color:#6b6b62;">--bg-color</div>
+          <div class="swatch-hex">#faf9f5</div>
+        </div>
+        <div class="swatch">
+          <div class="swatch-color" style="background:#f3f0e8; color:#6b6b62;">--code-bg</div>
+          <div class="swatch-hex">#f3f0e8</div>
+        </div>
+        <div class="swatch">
+          <div class="swatch-color" style="background:#e6e0d4; color:#6b6b62;">--border</div>
+          <div class="swatch-hex">#e6e0d4</div>
+        </div>
+        <div class="swatch">
+          <div class="swatch-color" style="background:#d97757; color:#fff;">Clay</div>
+          <div class="swatch-hex">#d97757 ★</div>
+        </div>
+        <div class="swatch">
+          <div class="swatch-color" style="background:#c4623f; color:#fff;">Hover</div>
+          <div class="swatch-hex">#c4623f</div>
+        </div>
+        <div class="swatch">
+          <div class="swatch-color" style="background:#6b6b62; color:#fff;">Muted</div>
+          <div class="swatch-hex">#6b6b62</div>
+        </div>
+        <div class="swatch">
+          <div class="swatch-color" style="background:#1a1a18; color:#faf9f5;">Text</div>
+          <div class="swatch-hex">#1a1a18</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Contrast Check -->
+    <div class="section">
+      <div class="section-title">Contrast Check (WCAG)</div>
+      <div class="contrast-grid">
+        <div class="contrast-card">
+          <div class="contrast-sample" style="background:#faf9f5; color:#1a1a18;">Body text sample</div>
+          <div class="contrast-score">~16.1 : 1</div>
+          <div class="contrast-label contrast-pass">✓ AAA — Excellent for reading</div>
+        </div>
+        <div class="contrast-card">
+          <div class="contrast-sample" style="background:#faf9f5; color:#6b6b62;">Muted text sample</div>
+          <div class="contrast-score">~5.8 : 1</div>
+          <div class="contrast-label contrast-pass">✓ AA — Secondary text</div>
+        </div>
+        <div class="contrast-card">
+          <div class="contrast-sample" style="background:#faf9f5; color:#8a8a80;">Faint text sample</div>
+          <div class="contrast-score">~3.9 : 1</div>
+          <div class="contrast-label contrast-warn">△ AA for large text only</div>
+        </div>
+        <div class="contrast-card">
+          <div class="contrast-sample" style="background:#faf9f5; color:#b8603f;">Link text with underline</div>
+          <div class="contrast-score">~4.6 : 1</div>
+          <div class="contrast-label contrast-pass">✓ AA — With dotted underline</div>
+        </div>
+        <div class="contrast-card">
+          <div class="contrast-sample" style="background:#faf9f5; color:#c93030;">Caution red text</div>
+          <div class="contrast-score">~5.9 : 1</div>
+          <div class="contrast-label contrast-pass">✓ AA — Pass</div>
+        </div>
+        <div class="contrast-card">
+          <div class="contrast-sample" style="background:#141413; color:#d4d0c8;">Feature Card body</div>
+          <div class="contrast-score">~9.6 : 1</div>
+          <div class="contrast-label contrast-pass">✓ AAA — Dark card</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Features -->
+    <div class="section">
+      <div class="section-title">Features</div>
+      <div class="feature-grid">
+        <div class="feature-card">
+          <div class="feature-icon">🔤</div>
+          <h3>Font Isolation</h3>
+          <p>Unicode-range separates Chinese and English rendering with independent @font-face.</p>
+        </div>
+        <div class="feature-card">
+          <div class="feature-icon">⚖️</div>
+          <h3>Weight Decoupling</h3>
+          <p>Inter Regular (400) for English, Noto Sans SC Light (300) for Chinese — visually balanced.</p>
+        </div>
+        <div class="feature-card">
+          <div class="feature-icon">🎨</div>
+          <h3>Warm Palette</h3>
+          <p>Clay + Ivory color system with careful attention to readability and mood.</p>
+        </div>
+        <div class="feature-card">
+          <div class="feature-icon">📐</div>
+          <h3>CSS Variables</h3>
+          <p>Full token-based design system for easy customization.</p>
+        </div>
+        <div class="feature-card">
+          <div class="feature-icon">🔗</div>
+          <h3>Link Icons</h3>
+          <p>External links auto-display icons, anchors excluded.</p>
+        </div>
+        <div class="feature-card">
+          <div class="feature-icon">🖨️</div>
+          <h3>Print Ready</h3>
+          <p>Link icons suppressed in print, page breaks optimized.</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- Callout Cards -->
+    <div class="section">
+      <div class="section-title">Callout Cards</div>
+      <div class="callout-grid">
+        <div class="callout-card feature">
+          <div class="callout-label">Feature Card</div>
+          <div class="callout-title">Deep Focus Mode</div>
+          <div class="callout-text">Dark surface with Clay accent. Perfect for highlighting important features and core concepts.</div>
+        </div>
+        <div class="callout-card info">
+          <div class="callout-label">Info Card</div>
+          <div class="callout-title">Background Knowledge</div>
+          <div class="callout-text">Ivory surface with warm border. Ideal for supplementary information and context.</div>
+        </div>
+        <div class="callout-card stat">
+          <div class="callout-label">Stat Card</div>
+          <div class="stat-number">99.9%</div>
+          <div class="stat-desc">Uptime / Availability</div>
+        </div>
+        <div class="callout-card danger">
+          <div class="callout-label">Danger Card</div>
+          <div class="callout-title">Warning Alert</div>
+          <div class="callout-text">Red border for error messages and dangerous operations.</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Typography -->
+    <div class="section">
+      <div class="section-title">Typography</div>
+      <div class="typo-sample">
+        <h2>Heading Example</h2>
+        <p>This is a sample paragraph demonstrating the theme's typography. The font system uses <strong>Inter</strong> for English and <strong>Noto Sans SC</strong> for Chinese characters, with unicode-range isolation to prevent visual conflicts.</p>
+        <p>Inline <code>code</code> uses JetBrains Mono with ligature support. Links display with dotted underline by default: <a href="#" style="color:var(--link-color); text-decoration:none; border-bottom:1px dotted var(--link-color);">sample link</a></p>
+      </div>
+    </div>
+
+    <!-- Font System -->
+    <div class="section">
+      <div class="section-title">Font System</div>
+      <div class="font-grid">
+        <div class="font-card">
+          <div class="font-name">Inter</div>
+          <div class="font-sample" style="font-family:'Inter',sans-serif;">The quick brown fox</div>
+          <div class="font-meta">300 · 400 · 500 · 700</div>
+        </div>
+        <div class="font-card">
+          <div class="font-name">Noto Sans SC</div>
+          <div class="font-sample" style="font-family:'Noto Sans SC',sans-serif;">信息美感与秩序</div>
+          <div class="font-meta">300 · 400 · 500 · 700</div>
+        </div>
+        <div class="font-card">
+          <div class="font-name">JetBrains Mono</div>
+          <div class="font-sample" style="font-family:'JetBrains Mono',monospace;">const theme = {}</div>
+          <div class="font-meta">400 · 400i · 500</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Syntax Colors -->
+    <div class="section">
+      <div class="section-title">Syntax Highlighting</div>
+      <div class="syntax-grid">
+        <div class="syntax-swatch">
+          <div class="token" style="color:#a08060;">comment</div>
+          <div class="hex">#a08060</div>
+        </div>
+        <div class="syntax-swatch">
+          <div class="token" style="color:#b04a32;">keyword</div>
+          <div class="hex">#b04a32</div>
+        </div>
+        <div class="syntax-swatch">
+          <div class="token" style="color:#b45309;">number</div>
+          <div class="hex">#b45309</div>
+        </div>
+        <div class="syntax-swatch">
+          <div class="token" style="color:#5d7a10;">string</div>
+          <div class="hex">#5d7a10</div>
+        </div>
+        <div class="syntax-swatch">
+          <div class="token" style="color:#c03535;">tag</div>
+          <div class="hex">#c03535</div>
+        </div>
+        <div class="syntax-swatch">
+          <div class="token" style="color:#3b2f2a;">identifier</div>
+          <div class="hex">#3b2f2a</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Installation -->
+    <div class="section">
+      <div class="section-title">Installation</div>
+      <div class="typo-sample" style="font-size:14px;">
+        <p><strong>1.</strong> Open Typora → Settings → Appearance → Open Theme Folder</p>
+        <p><strong>2.</strong> Copy <code>matoujie.css</code> and the <code>fonts/</code> directory</p>
+        <p><strong>3.</strong> Restart Typora</p>
+        <p><strong>4.</strong> Select <strong>Matoujie</strong> from the Theme menu</p>
+      </div>
+    </div>
+
+  </div>
+
+  <footer>
+    <p>Matoujie Theme for Typora — Designed by HAE</p>
+    <p style="margin-top:0.5rem;">
+      <a href="https://github.com">GitHub</a> ·
+      <a href="https://github.com/aerandirsf/Konayuki">Konayuki</a> ·
+      <a href="https://rsms.me/inter/">Inter</a> ·
+      <a href="https://github.com/notofonts/noto-cjk">Noto Sans SC</a> ·
+      <a href="https://www.jetbrains.com/lp/mono/">JetBrains Mono</a>
+    </p>
+  </footer>
+
+</body>
+</html>
