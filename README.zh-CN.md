@@ -1,5 +1,7 @@
 # Matoujie 主题
 
+[English](README.md)
+
 Matoujie 是一套由 HAE 制作的 Typora 主题，主打清爽、克制、易读的编辑体验。
 
 [查看主题展示页面](https://HAE8939.github.io/typora-theme/)
