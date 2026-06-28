@@ -149,7 +149,6 @@
   /* [Fix] Link Colors - 提升对比度以满足 WCAG AA 标准 */
   --link-color: #b8603f;             /* 对比度 > 4.5:1 */
   --link-color-hover: #9a4d2f;
-  --link-decoration: dotted;         /* 默认显示点状下划线 */
 
   --border-color: #e6e0d4;
   --table-border-color: #ddd7ca;
@@ -1014,12 +1013,10 @@ body #write .md-def-footnote {
 body #write .md-def-link {
   color: var(--link-color);
   text-decoration: none;
-  border-bottom: 1px dotted var(--link-color);
 }
 
 body #write .md-def-link:hover {
   color: var(--link-color-hover);
-  border-bottom-style: solid;
 }
 
 body #write .md-toc {
