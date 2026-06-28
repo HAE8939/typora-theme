@@ -434,17 +434,15 @@ content {
 /* ========================================
  Links & Inline Emphasis
  ======================================== */
-/* [Fix] 使用高对比度颜色 + 下划线双重保障 */
 #write a {
   color: var(--link-color);
   text-decoration: none;
-  border-bottom: 1px var(--link-decoration) var(--link-color);
+  border-bottom: none;
   transition: var(--transition-fast);
 }
 
 #write a:hover {
   color: var(--link-color-hover);
-  border-bottom-style: solid;
 }
 
 #write a:focus,

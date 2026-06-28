@@ -333,13 +333,11 @@
     .link-demo a {
       color: var(--link-color);
       text-decoration: none;
-      border-bottom: 1px dotted var(--link-color);
       font-size: 14px;
     }
 
     .link-demo a:hover {
       color: var(--clay-hover);
-      border-bottom-style: solid;
     }
 
     .font-grid {
@@ -414,7 +412,6 @@
     footer a {
       color: var(--link-color);
       text-decoration: none;
-      border-bottom: 1px dotted var(--link-color);
     }
 
     @media (max-width: 640px) {
@@ -496,9 +493,9 @@
           <div class="contrast-label contrast-warn">△ 仅达 AA 大字体标准</div>
         </div>
         <div class="contrast-card">
-          <div class="contrast-sample" style="background:#faf9f5; color:#b8603f;">链接文字（带下划线）</div>
+          <div class="contrast-sample" style="background:#faf9f5; color:#b8603f;">链接文字（仅颜色）</div>
           <div class="contrast-score">~4.6 : 1</div>
-          <div class="contrast-label contrast-pass">✓ AA — 配合点状下划线</div>
+          <div class="contrast-label contrast-pass">✓ AA — 链接文字对比度</div>
         </div>
         <div class="contrast-card">
           <div class="contrast-sample" style="background:#faf9f5; color:#c93030;">警告红文字</div>
@@ -583,7 +580,7 @@
       <div class="typo-sample">
         <h2>标题示例</h2>
         <p>这是一段展示主题排版效果的示例文字。字体系统使用 <strong>Inter</strong> 渲染英文，<strong>Noto Sans SC</strong> 渲染中文，通过 Unicode-range 隔离避免视觉冲突。</p>
-        <p>行内 <code>代码</code> 使用 JetBrains Mono，支持连字。链接默认显示点状下划线：<a href="#" style="color:var(--link-color); text-decoration:none; border-bottom:1px dotted var(--link-color);">示例链接</a></p>
+        <p>行内 <code>代码</code> 使用 JetBrains Mono，支持连字。链接仅用颜色区分：<a href="#" style="color:var(--link-color); text-decoration:none;">示例链接</a></p>
       </div>
     </div>
 

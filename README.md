@@ -13,7 +13,7 @@ Matoujie is a clean, elegant Typora theme designed by HAE. It focuses on a calm,
 - **Unicode-range font isolation** — Chinese and English render with independent @font-face, no visual conflict
 - **Weight decoupling** — body text uses Inter Regular (400) for English, Noto Sans SC Light (300) for Chinese
 - Anthropic-style callout cards (Feature / Info / Stat / Quote / Danger)
-- Auto link icons on external links
+- Auto link icons on external links (no underline, color only)
 - Optimized sidebar with slate-card styling
 - Print-friendly with link icon suppression
 
