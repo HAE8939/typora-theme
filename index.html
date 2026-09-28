@@ -305,6 +305,89 @@
 
     .callout-card.feature .callout-text { color: var(--card-dark-muted); }
 
+    /* Hero GitHub button */
+    .hero-gh {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      margin-top: 1.75rem;
+      padding: 0.6rem 1.3rem;
+      background: var(--card-dark);
+      color: #fff;
+      text-decoration: none;
+      font-size: 0.95rem;
+      font-weight: 500;
+      border-radius: 999px;
+      box-shadow: var(--shadow);
+      transition: background 0.15s ease;
+    }
+    .hero-gh:hover { background: var(--clay-hover); }
+    .hero-gh svg { width: 18px; height: 18px; fill: currentColor; }
+
+    /* Demo panel container */
+    .demo-panel {
+      background: white;
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 1.5rem;
+      box-shadow: var(--shadow);
+    }
+    .demo-caption { margin-top: 1.1rem; font-size: 12px; color: var(--text-faint); line-height: 1.7; }
+    .demo-caption code { background: var(--bg-code); padding: 0.1em 0.4em; border-radius: 4px; font-family: 'JetBrains Mono', monospace; font-size: 11px; }
+
+    /* Demo: buttons */
+    .demo-btn {
+      display: inline-flex;
+      align-items: center;
+      font-size: 0.95rem;
+      font-weight: 500;
+      line-height: 1;
+      color: #fff;
+      background: var(--clay);
+      border: none;
+      border-radius: 8px;
+      padding: 0.55em 1.1em;
+      box-shadow: var(--shadow);
+      cursor: pointer;
+      text-decoration: none;
+      transition: background 0.15s ease, color 0.15s ease, border-color 0.15s ease;
+    }
+    .demo-btn:hover { background: var(--clay-hover); }
+    .demo-btn.secondary { color: var(--clay); background: transparent; border: 1.5px solid var(--clay); box-shadow: none; }
+    .demo-btn.secondary:hover { color: var(--clay-hover); border-color: var(--clay-hover); background: #d9775714; }
+    .demo-btn.super { color: #fff; background: var(--card-dark); box-shadow: inset 0 0 0 1px #d9775740, var(--shadow); }
+    .demo-btn.super:hover { background: var(--clay-hover); box-shadow: none; }
+    .demo-btn-row { display: flex; flex-wrap: wrap; gap: 0.9rem; align-items: center; }
+    .demo-btn-center { text-align: center; margin-top: 1.25rem; padding-top: 1.25rem; border-top: 1px dashed var(--border); }
+
+    /* Demo: columns */
+    .demo-cols { display: flex; gap: 2%; margin-bottom: 1.25rem; }
+    .demo-cols:last-of-type { margin-bottom: 0; }
+    .demo-col {
+      flex: 1;
+      background: #f5efe7;
+      border-left: 4px solid #d8a06f;
+      border-radius: 6px;
+      padding: 0.9rem 1rem;
+      box-shadow: var(--shadow);
+    }
+    .demo-col h4 { font-size: 14px; font-weight: 600; margin-bottom: 0.4rem; }
+    .demo-col p { font-size: 13px; line-height: 1.6; color: var(--text); }
+
+    /* Demo: tabs */
+    .demo-tab-bar { display: flex; flex-wrap: wrap; gap: 6px; border-bottom: 1px solid var(--border); padding-bottom: 8px; }
+    .demo-tab-btn {
+      font-family: 'Inter', 'Noto Sans SC', sans-serif;
+      font-size: 0.85rem; line-height: 1; padding: 0.45em 1em;
+      border: 1px solid var(--border); border-radius: 999px;
+      background: transparent; color: var(--text-muted); cursor: pointer;
+      transition: color 0.15s ease, border-color 0.15s ease, background 0.15s ease;
+    }
+    .demo-tab-btn:hover { color: var(--clay); border-color: var(--clay); }
+    .demo-tab-btn[aria-selected="true"] { background: var(--clay); border-color: var(--clay); color: #fff; }
+    .demo-tab-panel { margin-top: 1rem; font-size: 14px; line-height: 1.7; color: var(--text); }
+    .demo-tab-panel[hidden] { display: none; }
+
     .typo-sample {
       background: white;
       border: 1px solid var(--border);
@@ -437,6 +520,10 @@
   <div class="hero">
     <h1>Matou<span>jie</span></h1>
     <p>一套清爽、温暖的 Typora 主题，专为沉静、高可读性的写作体验而设计。精心关注排版、对比度与 Unicode-range 字体隔离。</p>
+    <a class="hero-gh" href="https://github.com/HAE8939/typora-theme" target="_blank" rel="noopener">
+      <svg viewBox="0 0 16 16" aria-hidden="true"><path d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.01 8.01 0 0 0 16 8c0-4.42-3.58-8-8-8z"/></svg>
+      github.com/HAE8939/typora-theme
+    </a>
   </div>
 
   <div class="container">
@@ -611,6 +698,70 @@
       </div>
     </div>
 
+    <!-- 按钮链接 -->
+    <div class="section">
+      <div class="section-title">按钮链接</div>
+      <div class="demo-panel">
+        <div class="demo-btn-row">
+          <a class="demo-btn" href="https://github.com/HAE8939/typora-theme">标准按钮</a>
+          <a class="demo-btn secondary" href="https://github.com/HAE8939/typora-theme">次按钮</a>
+          <a class="demo-btn super" href="https://github.com/HAE8939/typora-theme">超级按钮</a>
+        </div>
+        <div class="demo-btn-center">
+          <a class="demo-btn" href="https://github.com/HAE8939/typora-theme">开始使用 / Get Started</a>
+        </div>
+        <p class="demo-caption">语法：<code>[&lt;kbd&gt;标准按钮&lt;/kbd&gt;](url)</code> 实心 · <code>*[…]*</code> 描边 · <code>**[…]**</code> 深色；整行只有按钮时自动居中（上方虚线以下即为居中示例）。</p>
+      </div>
+    </div>
+
+    <!-- 分栏排版 -->
+    <div class="section">
+      <div class="section-title">分栏排版</div>
+      <div class="demo-panel">
+        <div class="demo-cols">
+          <div class="demo-col">
+            <h4>左栏 / Left</h4>
+            <p>分隔线加连续引用块组成，适合并排对比、多方案展示。</p>
+          </div>
+          <div class="demo-col">
+            <h4>右栏 / Right</h4>
+            <p>引用块与 Callout 卡片均可作为分栏成员，保留原有配色。</p>
+          </div>
+        </div>
+        <div class="demo-cols">
+          <div class="demo-col">
+            <h4>第一栏</h4>
+            <p>使用两条分隔线。</p>
+          </div>
+          <div class="demo-col">
+            <h4>第二栏</h4>
+            <p>建议每栏长度相近。</p>
+          </div>
+          <div class="demo-col">
+            <h4>第三栏</h4>
+            <p>五栏同理。</p>
+          </div>
+        </div>
+        <p class="demo-caption">语法：N 个 <code>---</code> 后跟 N+1 个连续引用块 = N+1 栏（上为双栏，下为三栏）。</p>
+      </div>
+    </div>
+
+    <!-- 页签组 -->
+    <div class="section">
+      <div class="section-title">页签组</div>
+      <div class="demo-panel">
+        <div class="demo-tab-bar" role="tablist">
+          <button class="demo-tab-btn" role="tab" aria-selected="true" data-tab="mj-t1">页签一 / First</button>
+          <button class="demo-tab-btn" role="tab" aria-selected="false" data-tab="mj-t2">页签二 / Second</button>
+          <button class="demo-tab-btn" role="tab" aria-selected="false" data-tab="mj-t3">页签三 / Third</button>
+        </div>
+        <div class="demo-tab-panel" id="mj-t1" role="tabpanel">每个面板第一行若是独立加粗行，会自动作为页签标签。</div>
+        <div class="demo-tab-panel" id="mj-t2" role="tabpanel" hidden>导出后点击页签切换，或用 Tab / Shift+Tab 键轮换。</div>
+        <div class="demo-tab-panel" id="mj-t3" role="tabpanel" hidden>不足两个面板时标记会被自动移除，不影响正文。</div>
+        <p class="demo-caption">语法：连续内容前空一行写 <code>*tab*</code>；需配合导出插件，导出 HTML 后生效，编辑器内不做转换。</p>
+      </div>
+    </div>
+
     <!-- 排版示例 -->
     <div class="section">
       <div class="section-title">排版示例</div>
@@ -690,14 +841,25 @@
 
   <footer>
     <p>Matoujie Theme for Typora — Designed by HAE</p>
-    <p style="margin-top:0.5rem;">
-      <a href="https://github.com/HAE8939/typora-theme">GitHub</a> ·
-      <a href="https://github.com/aerandirsf/Konayuki">Konayuki</a> ·
-      <a href="https://rsms.me/inter/">Inter</a> ·
-      <a href="https://github.com/notofonts/noto-cjk">Noto Sans SC</a> ·
-      <a href="https://www.jetbrains.com/lp/mono/">JetBrains Mono</a>
-    </p>
   </footer>
+
+  <script>
+    (function () {
+      var tabs = document.querySelectorAll('.demo-tab-btn');
+      tabs.forEach(function (btn) {
+        btn.addEventListener('click', function () {
+          tabs.forEach(function (b) {
+            b.setAttribute('aria-selected', 'false');
+            var p = document.getElementById(b.getAttribute('data-tab'));
+            if (p) p.hidden = true;
+          });
+          btn.setAttribute('aria-selected', 'true');
+          var panel = document.getElementById(btn.getAttribute('data-tab'));
+          if (panel) panel.hidden = false;
+        });
+      });
+    })();
+  </script>
 
 </body>
 </html>
