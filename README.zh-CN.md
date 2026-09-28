@@ -12,7 +12,7 @@ Matoujie 是一套由 HAE 制作的 Typora 主题，主打清爽、克制、易�
 - 温暖配色（Clay + Ivory），兼顾美感与可读性
 - **Unicode-range 字体隔离** — 中英文各自渲染，互不干扰
 - **字重解耦** — 英文用 Inter Regular (400)，中文用 Noto Sans SC Light (300)，视觉重量一致
-- 克制风 Callout 卡片（Feature / Info / Stat / Quote / Danger）
+- 克制风 Callout 卡片（Info / Tip / Feature / Warning / Danger）
 - **按钮链接** — `[<kbd>按钮</kbd>](url)` 实心 / 斜体描边 / 粗体深色三态，整行按钮自动居中
 - **分栏排版** — N 个 `---` + N+1 个连续引用块 = 2~5 栏
 - **页签组**（可选插件）— `*tab*` 标记 + 连续内容，导出 HTML 后轮换展示

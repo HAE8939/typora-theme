@@ -233,11 +233,11 @@
   --card-note-bg: #faf9f5;               /* Info Card 背景 */
   --card-note-border: var(--border-color);
 
-  --card-tip-bg: #faf9f5;                /* Stat Card 背景 */
-  --card-tip-border: var(--border-color);
+  --card-tip-bg: #eef5ef;                /* Tip Card 背景（浅绿） */
+  --card-tip-border: var(--callout-tip);
 
-  --card-warning-bg: transparent;        /* Quote Card 背景 */
-  --card-warning-border: var(--border-color);
+  --card-warning-bg: #fbf3e7;            /* Warning Card 背景（浅琥珀） */
+  --card-warning-border: var(--callout-warning);
   
   --card-caution-bg: #fdf2f2;            
   --card-caution-border: #c93030;        
@@ -729,106 +729,78 @@ body #write .md-alert.md-alert-note p {
   font-size: 0.95rem;
 }
 
-/* ---- Stat Card (via [!TIP]) ---- */
-/* [Fix] 使用专用变量 */
+/* ---- Tip Card (via [!TIP]) ---- */
+/* 标准 callout 语言：语义绿 + 色条 + 可见标题 + 正文层次（与 NOTE/CAUTION 一致） */
 body #write .md-alert.md-alert-tip {
   background: var(--card-tip-bg);
   border-left: none;
   border: 1.5px solid var(--card-tip-border);
   border-radius: var(--radius-large);
-  padding: 1.6rem 1.5rem;
-  text-align: center;
+  padding: 1.5rem 1.5rem 1.4rem;
   box-shadow: var(--shadow-small);
   margin: 1.8rem 0;
+  position: relative;
+}
+
+body #write .md-alert.md-alert-tip::before {
+  content: '';
+  display: block;
+  width: 36px;
+  height: 3px;
+  background: var(--card-tip-border);
+  border-radius: 2px;
+  margin-bottom: 0.9rem;
 }
 
 body #write .md-alert.md-alert-tip .md-alert-text {
-  font-size: 0.72rem;
-  letter-spacing: 0.14em;
+  font-size: 0.78rem;
+  letter-spacing: 0.1em;
   text-transform: uppercase;
-  color: var(--text-muted);
   font-weight: 600;
-  margin-bottom: 0.5rem;
+  color: var(--card-tip-border);
+  margin-bottom: 0.6rem;
 }
 
-body #write .md-alert.md-alert-tip>p:not(.md-alert-text):not(.md-alert-text-container) {
-  font-size: 0.85rem;
-  color: var(--text-muted);
-  margin: 0;
-  line-height: 1.4;
+body #write .md-alert.md-alert-tip p {
+  color: var(--text-color);
+  font-size: 0.95rem;
 }
 
-body #write .md-alert.md-alert-tip>.md-alert-text+p,
-body #write .md-alert.md-alert-tip>.md-alert-text-container+p {
-  font-size: 2.8rem;
-  font-weight: 700;
-  line-height: 1.1;
-  color: var(--primary-color);
-  margin: 0.2rem 0 0.5rem;
-  letter-spacing: -0.02em;
-}
-
-/* ---- Quote Card (via [!WARNING]) ---- */
-/* [Fix] 使用专用变量 */
+/* ---- Warning Card (via [!WARNING]) ---- */
+/* 标准 callout 语言：语义琥珀 + 色条 + 可见「⚠ WARNING」标题 + 正文层次 */
 body #write .md-alert.md-alert-warning {
   background: var(--card-warning-bg);
   border-left: none;
-  border-top: 1.5px solid var(--card-warning-border);
-  border-bottom: 1.5px solid var(--card-warning-border);
-  border-radius: 0;
-  padding: 2rem 0.5rem 1.5rem;
-  box-shadow: none;
-  margin: 2.5rem 0;
-  text-align: center;
+  border: 1.5px solid var(--card-warning-border);
+  border-radius: var(--radius-large);
+  padding: 1.5rem 1.5rem 1.4rem;
+  box-shadow: var(--shadow-small);
+  margin: 1.8rem 0;
   position: relative;
 }
 
 body #write .md-alert.md-alert-warning::before {
-  content: '\201C';
+  content: '';
   display: block;
-  font-size: 4rem;
-  line-height: 1;
-  color: var(--primary-color);
-  margin-bottom: -0.5rem;
-  font-family: Georgia, serif;
-  opacity: 0.6;
+  width: 36px;
+  height: 3px;
+  background: var(--card-warning-border);
+  border-radius: 2px;
+  margin-bottom: 0.9rem;
 }
 
-body #write .md-alert.md-alert-warning .md-alert-text,
-body #write .md-alert.md-alert-warning .md-alert-text-container {
-  position: absolute;
-  width: 1px;
-  height: 1px;
-  margin: -1px;
-  padding: 0;
-  overflow: hidden;
-  clip: rect(0 0 0 0);
-  clip-path: inset(50%);
-  white-space: nowrap;
-  border: 0;
-}
-
-body #write .md-alert.md-alert-warning>.md-alert-text+p,
-body #write .md-alert.md-alert-warning>.md-alert-text-container+p {
-  font-size: 1.2rem;
-  line-height: 1.7;
-  color: var(--text-color);
-  font-style: italic;
-  margin: 0.5rem 0 1rem;
-  max-width: 48ch;
-  margin-left: auto;
-  margin-right: auto;
-}
-
-body #write .md-alert.md-alert-warning>.md-alert-text+p+p,
-body #write .md-alert.md-alert-warning>.md-alert-text-container+p+p {
-  font-size: 0.8rem;
-  font-style: normal;
-  color: var(--text-muted);
-  letter-spacing: 0.08em;
+body #write .md-alert.md-alert-warning .md-alert-text {
+  font-size: 0.78rem;
+  letter-spacing: 0.1em;
   text-transform: uppercase;
   font-weight: 600;
-  margin: 0;
+  color: var(--card-warning-border);
+  margin-bottom: 0.6rem;
+}
+
+body #write .md-alert.md-alert-warning p {
+  color: var(--text-color);
+  font-size: 0.95rem;
 }
 
 /* ---- Danger Card (via [!CAUTION]) ---- */

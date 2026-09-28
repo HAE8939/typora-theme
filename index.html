@@ -231,10 +231,34 @@
       margin-bottom: 0.75rem;
     }
 
-    .callout-card.stat {
-      background: white;
-      border: 1px solid var(--border);
-      text-align: center;
+    .callout-card.tip {
+      background: #eef5ef;
+      border: 1px solid var(--tip-color);
+    }
+
+    .callout-card.tip::before {
+      content: '';
+      display: block;
+      width: 36px;
+      height: 3px;
+      background: var(--tip-color);
+      border-radius: 2px;
+      margin-bottom: 0.75rem;
+    }
+
+    .callout-card.warning {
+      background: #fbf3e7;
+      border: 1px solid var(--warning-color);
+    }
+
+    .callout-card.warning::before {
+      content: '';
+      display: block;
+      width: 36px;
+      height: 3px;
+      background: var(--warning-color);
+      border-radius: 2px;
+      margin-bottom: 0.75rem;
     }
 
     .callout-card.danger {
@@ -262,6 +286,8 @@
     }
 
     .callout-card.feature .callout-label { color: var(--clay); }
+    .callout-card.tip .callout-label { color: var(--tip-color); }
+    .callout-card.warning .callout-label { color: var(--warning-color); }
     .callout-card.danger .callout-label { color: var(--card-caution-border); }
 
     .callout-title {
@@ -278,20 +304,6 @@
     }
 
     .callout-card.feature .callout-text { color: var(--card-dark-muted); }
-
-    .stat-number {
-      font-size: 3rem;
-      font-weight: 700;
-      color: var(--clay);
-      letter-spacing: -0.02em;
-      line-height: 1.1;
-      margin: 0.5rem 0;
-    }
-
-    .stat-desc {
-      font-size: 13px;
-      color: var(--text-muted);
-    }
 
     .typo-sample {
       background: white;
@@ -561,10 +573,15 @@
           <div class="callout-title">背景知识</div>
           <div class="callout-text">象牙色背景搭配暖色边框，适合补充说明和背景信息。</div>
         </div>
-        <div class="callout-card stat">
-          <div class="callout-label">Stat Card</div>
-          <div class="stat-number">99.9%</div>
-          <div class="stat-desc">可用性 / 正常运行时间</div>
+        <div class="callout-card tip">
+          <div class="callout-label">Tip Card</div>
+          <div class="callout-title">小贴士</div>
+          <div class="callout-text">绿色语义，适合最佳实践、正面建议与操作提示。</div>
+        </div>
+        <div class="callout-card warning">
+          <div class="callout-label">Warning Card</div>
+          <div class="callout-title">注意事项</div>
+          <div class="callout-text">琥珀色语义，适合潜在风险与易出错操作的提醒。</div>
         </div>
         <div class="callout-card danger">
           <div class="callout-label">Danger Card</div>
