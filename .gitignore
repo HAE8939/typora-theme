@@ -12,5 +12,7 @@ Thumbs.db
 *.swo
 *~
 
-# Claude settings
+# Tool configurations
 .claude/
+.agents/
+.codegraph/

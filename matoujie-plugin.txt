@@ -1,0 +1,240 @@
+<script>
+/**
+ * Matoujie Plugin for Typora exported HTML
+ *
+ * 为 Matoujie 主题的导出 HTML 提供三项增强（编辑器内不生效）：
+ *   1. 页签组 — 语法：在连续内容（表格/插图/引用块/Callout/代码块）前空一行写 _^tab^_
+ *   2. 代码块一键复制 — 代码块右上角复制按钮
+ *   3. 长代码块折叠 — 超过 foldLines 行的代码块默认折叠，可展开/收起
+ *
+ * 接入：Typora「偏好设置 → 导出 → HTML → 在 </body> 中添加」粘贴本文件全文即可
+ *       （本文件已含 <script> 包裹；该输入框插入的是 HTML 片段，裸 JS 不会执行）。
+ * 语法设计与 VLOOK™（MIT, MadMaxChow/VLOOK）兼容，实现为本主题独立轻量版。
+ */
+(function () {
+  'use strict';
+
+  var root = document.getElementById('write') || document.body;
+
+  /* 可调配置 */
+  var CONFIG = {
+    foldLines: 20,            // 超过该行数的代码块可折叠
+    collapsedByDefault: true  // 长代码块是否默认折叠
+  };
+
+  /* ============================================================
+     代码块增强：一键复制 + 长代码折叠
+     ============================================================ */
+
+  function copyText(text, done) {
+    if (navigator.clipboard && navigator.clipboard.writeText) {
+      navigator.clipboard.writeText(text).then(function () { done(true); }, function () {
+        done(copyFallback(text));
+      });
+    } else {
+      done(copyFallback(text));
+    }
+  }
+
+  function copyFallback(text) {
+    var ta = document.createElement('textarea');
+    ta.value = text;
+    ta.style.cssText = 'position:fixed;left:-9999px;top:0';
+    document.body.appendChild(ta);
+    ta.select();
+    var ok = false;
+    try { ok = document.execCommand('copy'); } catch (e) { ok = false; }
+    ta.remove();
+    return ok;
+  }
+
+  function enhanceCode(pre) {
+    if (pre.dataset.mjCode) return; // 防重复处理
+    pre.dataset.mjCode = '1';
+
+    var wrap = document.createElement('div');
+    wrap.className = 'mj-code';
+    pre.parentNode.insertBefore(wrap, pre);
+    wrap.appendChild(pre);
+
+    var code = pre.querySelector('code');
+    var text = (code || pre).textContent;
+
+    // 复制按钮
+    var btn = document.createElement('button');
+    btn.type = 'button';
+    btn.className = 'mj-code-copy';
+    btn.textContent = '复制';
+    btn.addEventListener('click', function () {
+      copyText(text, function (ok) {
+        btn.textContent = ok ? '✓ 已复制' : '✗ 复制失败';
+        btn.classList.add('mj-code-copy-done');
+        setTimeout(function () {
+          btn.textContent = '复制';
+          btn.classList.remove('mj-code-copy-done');
+        }, 1600);
+      });
+    });
+    wrap.appendChild(btn);
+
+    // 长代码折叠
+    var lines = text.split('\n').length;
+    if (lines > CONFIG.foldLines) {
+      var toggle = document.createElement('button');
+      toggle.type = 'button';
+      toggle.className = 'mj-code-toggle';
+      var setCollapsed = function (c) {
+        pre.classList.toggle('mj-folded', c);
+        toggle.textContent = c
+          ? '展开全部 ' + lines + ' 行 ▾'
+          : '收起 ▴';
+      };
+      toggle.addEventListener('click', function () {
+        setCollapsed(!pre.classList.contains('mj-folded'));
+      });
+      wrap.appendChild(toggle);
+      setCollapsed(CONFIG.collapsedByDefault);
+    }
+  }
+
+  function initCode() {
+    // 仅处理代码块外层 pre.md-fences；导出 HTML 内部每行是 pre.CodeMirror-line，不可触碰
+    Array.prototype.forEach.call(
+      root.querySelectorAll('pre.md-fences'),
+      function (pre) {
+        if (pre.dataset.mjCode) return;
+        enhanceCode(pre);
+      }
+    );
+  }
+
+  /* ============================================================
+     页签组
+     识别 <p><em><sup>tab</sup></em></p>（_^tab^_ 或 *^tab^*）标记，
+     将其后连续的「面板候选」元素折叠为页签组。
+     ============================================================ */
+
+  function isTabMarker(el) {
+    if (!el || el.nodeType !== 1 || el.tagName !== 'P') return false;
+    var text = el.textContent.trim().toLowerCase();
+    return text === 'tab' && el.querySelector('em, i, sup');
+  }
+
+  function isPanelCandidate(el) {
+    if (!el || el.nodeType !== 1) return false;
+    var tag = el.tagName;
+    if (tag === 'TABLE' || tag === 'BLOCKQUOTE' || tag === 'PRE' || tag === 'FIGURE') return true;
+    if (el.classList.contains('md-alert')) return true;
+    if (tag === 'P' && el.querySelector('img')) return true;
+    return false;
+  }
+
+  /* 页签标签：取面板第一行「独立加粗行」的文本，并从面板中移除该行；
+     否则回退为「页签 N」。 */
+  function extractLabel(panel, idx) {
+    var line = null;
+    if (panel.tagName === 'P') {
+      line = panel;
+    } else if (panel.tagName === 'BLOCKQUOTE' || panel.classList.contains('md-alert')) {
+      line = panel.querySelector('p');
+    } else {
+      line = panel.querySelector('p');
+    }
+    if (line && line.children.length === 1 && line.children[0].tagName === 'STRONG') {
+      var label = line.textContent.trim();
+      if (label) {
+        line.remove();
+        return label;
+      }
+    }
+    return '页签 ' + (idx + 1);
+  }
+
+  function buildTabGroup(marker) {
+    var panels = [];
+    var sib = marker.nextElementSibling;
+    while (sib && isPanelCandidate(sib)) {
+      panels.push(sib);
+      sib = sib.nextElementSibling;
+    }
+    if (panels.length < 2) {
+      marker.remove(); // 不足两个面板：不构成页签组，移除游离标记
+      return;
+    }
+
+    var group = document.createElement('div');
+    group.className = 'mj-tabs';
+
+    var bar = document.createElement('div');
+    bar.className = 'mj-tab-bar';
+    bar.setAttribute('role', 'tablist');
+
+    var wrap = document.createElement('div');
+    wrap.className = 'mj-tab-panels';
+
+    var current = 0;
+
+    function select(i) {
+      current = i;
+      Array.prototype.forEach.call(bar.children, function (btn, j) {
+        btn.setAttribute('aria-selected', j === i ? 'true' : 'false');
+      });
+      Array.prototype.forEach.call(wrap.children, function (panel, j) {
+        panel.classList.toggle('mj-active', j === i);
+      });
+    }
+
+    panels.forEach(function (panel, i) {
+      var btn = document.createElement('button');
+      btn.type = 'button';
+      btn.className = 'mj-tab-btn';
+      btn.setAttribute('role', 'tab');
+      btn.textContent = extractLabel(panel, i);
+      btn.addEventListener('click', function () { select(i); });
+      bar.appendChild(btn);
+
+      panel.classList.add('mj-tab-panel');
+      wrap.appendChild(panel);
+    });
+
+    group.appendChild(bar);
+    group.appendChild(wrap);
+
+    marker.parentNode.insertBefore(group, marker);
+    marker.remove();
+
+    // 键盘：Tab / Shift+Tab 在页签间轮换（与 VLOOK 行为一致）
+    group.addEventListener('keydown', function (e) {
+      if (e.key !== 'Tab') return;
+      e.preventDefault();
+      var n = bar.children.length;
+      var next = e.shiftKey ? (current - 1 + n) % n : (current + 1) % n;
+      select(next);
+      bar.children[next].focus();
+    });
+
+    select(0);
+  }
+
+  function initTabs() {
+    // 仅处理正文顶层标记（引用块内嵌页签组暂不支持）
+    var markers = Array.prototype.filter.call(
+      root.querySelectorAll(':scope > p'),
+      isTabMarker
+    );
+    markers.forEach(buildTabGroup);
+  }
+
+
+  function boot() {
+    try { initTabs(); } catch (e) { console.error('[matoujie] tabs:', e); }
+    try { initCode(); } catch (e) { console.error('[matoujie] code:', e); } // 须在 initTabs 之后：包 wrapper 会使 pre 不再被识别为页签面板
+  }
+
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', boot);
+  } else {
+    boot();
+  }
+})();
+</script>

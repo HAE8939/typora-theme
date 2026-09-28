@@ -1122,6 +1122,395 @@ body #write .cm-s-inner .cm-error { color: var(--syntax-error-text); background:
   content: none;
 }
 
+/* 按钮链接不显示链接图标（编辑器内 kbd 可能被 span 包裹，用后代匹配） */
+#write a[href]:has(kbd)::before,
+.md-preview-section a[href]:has(kbd)::before {
+  content: none;
+}
+
+/* ========================================
+  Buttons & Keyboard Keys
+  语法（借鉴 VLOOK）：
+    [<kbd>按钮</kbd>](url)      → 标准按钮（实心）
+    *[<kbd>按钮</kbd>](url)     → 次按钮（描边）
+    **[<kbd>按钮</kbd>](url)**  → 超级按钮（深色）
+  独立一行仅由按钮链接组成时自动居中
+  ======================================== */
+:root {
+  --btn-bg: var(--primary-color);
+  --btn-bg-hover: var(--primary-color-hover);
+  --btn-text: #ffffff;
+  --btn-secondary-bg-hover: #d9775714;
+  --btn-super-bg: var(--card-important-bg);
+  --btn-super-hover-bg: var(--primary-color-hover);
+}
+
+/* 键盘按键（不在链接内的 kbd） */
+#write kbd {
+  font-family: var(--font-mono);
+  font-size: 0.85em;
+  color: var(--code-text-color);
+  background: var(--code-bg-color);
+  border: 1px solid var(--border-color);
+  border-bottom-width: 2px;
+  border-radius: var(--radius-small);
+  padding: 0.1em 0.45em;
+  box-shadow: none;
+}
+
+/* 按钮基座：链接内的 kbd */
+#write a kbd {
+  display: inline-flex;
+  align-items: center;
+  font-family: var(--font-body);
+  font-size: 0.9em;
+  font-weight: 500;
+  font-style: normal;
+  line-height: 1;
+  color: var(--btn-text);
+  background: var(--btn-bg);
+  border: none;
+  border-radius: var(--radius-medium);
+  padding: 0.5em 1em;
+  box-shadow: var(--shadow-small);
+  transition: var(--transition-fast);
+}
+
+#write a kbd:hover {
+  background: var(--btn-bg-hover);
+}
+
+#write a kbd:active {
+  transform: translateY(1px);
+  box-shadow: none;
+}
+
+/* 次按钮：斜体包裹（编辑器内 em 被替换为 span[md-inline=em]，导出为 em） */
+#write em a kbd,
+#write span[md-inline=em] a kbd {
+  color: var(--btn-bg);
+  background: transparent;
+  border: 1.5px solid var(--btn-bg);
+  box-shadow: none;
+}
+
+#write em a kbd:hover,
+#write span[md-inline=em] a kbd:hover {
+  color: var(--btn-bg-hover);
+  border-color: var(--btn-bg-hover);
+  background: var(--btn-secondary-bg-hover);
+}
+
+/* 超级按钮：粗体包裹（同上，编辑器内为 span[md-inline=strong]） */
+#write strong a kbd,
+#write span[md-inline=strong] a kbd {
+  color: var(--btn-text);
+  background: var(--btn-super-bg);
+  box-shadow: inset 0 0 0 1px #d9775740, var(--shadow-small);
+}
+
+#write strong a kbd:hover,
+#write span[md-inline=strong] a kbd:hover {
+  background: var(--btn-super-hover-bg);
+  box-shadow: none;
+}
+
+#write strong a kbd:active,
+#write span[md-inline=strong] a kbd:active {
+  transform: translateY(1px);
+  box-shadow: inset 0 0 0 1px #d9775740;
+}
+
+/* 整行只有按钮链接（含斜体/粗体包裹）时居中
+   双套选择器：编辑器 DOM 有 span[md-inline]/span.md-link 包裹，导出 DOM 为 em/strong/a
+   （参照 VLOOK base.less:1025-1029） */
+#write p:has(> :is(span[md-inline=em], span[md-inline=strong], .md-link):only-child a kbd),
+#write p:has(> :is(span[md-inline=em], span[md-inline=strong], .md-link):first-child ~ :is(span[md-inline=em], span[md-inline=strong], .md-link):last-child a kbd),
+#write p:has(> :is(em, strong, a):only-child :is(kbd, a kbd)),
+#write p:has(> :is(em, strong, a):first-child ~ :is(em, strong, a):last-child :is(kbd, a kbd)) {
+  text-align: center;
+}
+
+/* ========================================
+  Column Layout (hr + blockquote 分栏)
+  语法（借鉴 VLOOK）：N 个 --- 后跟 N+1 个连续引用块/Callout = N+1 栏
+  例：--- + 引用块A + 引用块B = 双栏
+  注：选择器带 body 前缀以对齐基础引用块样式的特异性
+  ======================================== */
+/* 分栏分隔线：隐藏自身与装饰符 */
+body #write :is(hr, .md-hr):has(+ :is(blockquote, .md-alert)) {
+  visibility: hidden;
+  border: none;
+  margin: 0 !important;
+  padding: 0;
+}
+
+body #write :is(hr, .md-hr):has(+ :is(blockquote, .md-alert))::after {
+  content: none;
+}
+
+/* ---- 双栏（49 * 2 + 2 = 100）---- */
+body #write :is(hr, .md-hr) + :is(blockquote, .md-alert),
+body #write :is(hr, .md-hr) + :is(blockquote, .md-alert) + :is(blockquote, .md-alert) {
+  display: inline-block;
+  vertical-align: top;
+  max-width: 49%;
+  min-width: 49%;
+  box-sizing: border-box;
+  margin: 0.35rem 0;
+}
+
+body #write :is(hr, .md-hr) + :is(blockquote, .md-alert) + :is(blockquote, .md-alert) {
+  margin-left: 2% !important;
+}
+
+/* ---- 三栏（32 * 3 + 2 * 2 = 100）---- */
+body #write :is(hr, .md-hr) + :is(hr, .md-hr) + :is(blockquote, .md-alert),
+body #write :is(hr, .md-hr) + :is(hr, .md-hr) + :is(blockquote, .md-alert) + :is(blockquote, .md-alert),
+body #write :is(hr, .md-hr) + :is(hr, .md-hr) + :is(blockquote, .md-alert) + :is(blockquote, .md-alert) + :is(blockquote, .md-alert) {
+  display: inline-block;
+  vertical-align: top;
+  max-width: 32%;
+  min-width: 32%;
+  box-sizing: border-box;
+  margin: 0.35rem 0;
+}
+
+body #write :is(hr, .md-hr) + :is(hr, .md-hr) + :is(blockquote, .md-alert) + :is(blockquote, .md-alert),
+body #write :is(hr, .md-hr) + :is(hr, .md-hr) + :is(blockquote, .md-alert) + :is(blockquote, .md-alert) + :is(blockquote, .md-alert) {
+  margin-left: 2% !important;
+}
+
+/* ---- 四栏（23.5 * 4 + 2 * 3 = 100）---- */
+body #write :is(hr, .md-hr) + :is(hr, .md-hr) + :is(hr, .md-hr) + :is(blockquote, .md-alert),
+body #write :is(hr, .md-hr) + :is(hr, .md-hr) + :is(hr, .md-hr) + :is(blockquote, .md-alert) + :is(blockquote, .md-alert),
+body #write :is(hr, .md-hr) + :is(hr, .md-hr) + :is(hr, .md-hr) + :is(blockquote, .md-alert) + :is(blockquote, .md-alert) + :is(blockquote, .md-alert),
+body #write :is(hr, .md-hr) + :is(hr, .md-hr) + :is(hr, .md-hr) + :is(blockquote, .md-alert) + :is(blockquote, .md-alert) + :is(blockquote, .md-alert) + :is(blockquote, .md-alert) {
+  display: inline-block;
+  vertical-align: top;
+  max-width: 23.5%;
+  min-width: 23.5%;
+  box-sizing: border-box;
+  margin: 0.35rem 0;
+}
+
+body #write :is(hr, .md-hr) + :is(hr, .md-hr) + :is(hr, .md-hr) + :is(blockquote, .md-alert) + :is(blockquote, .md-alert),
+body #write :is(hr, .md-hr) + :is(hr, .md-hr) + :is(hr, .md-hr) + :is(blockquote, .md-alert) + :is(blockquote, .md-alert) + :is(blockquote, .md-alert),
+body #write :is(hr, .md-hr) + :is(hr, .md-hr) + :is(hr, .md-hr) + :is(blockquote, .md-alert) + :is(blockquote, .md-alert) + :is(blockquote, .md-alert) + :is(blockquote, .md-alert) {
+  margin-left: 2% !important;
+}
+
+/* ---- 五栏（19.2 * 5 + 1 * 4 = 100）---- */
+body #write :is(hr, .md-hr) + :is(hr, .md-hr) + :is(hr, .md-hr) + :is(hr, .md-hr) + :is(blockquote, .md-alert),
+body #write :is(hr, .md-hr) + :is(hr, .md-hr) + :is(hr, .md-hr) + :is(hr, .md-hr) + :is(blockquote, .md-alert) + :is(blockquote, .md-alert),
+body #write :is(hr, .md-hr) + :is(hr, .md-hr) + :is(hr, .md-hr) + :is(hr, .md-hr) + :is(blockquote, .md-alert) + :is(blockquote, .md-alert) + :is(blockquote, .md-alert),
+body #write :is(hr, .md-hr) + :is(hr, .md-hr) + :is(hr, .md-hr) + :is(hr, .md-hr) + :is(blockquote, .md-alert) + :is(blockquote, .md-alert) + :is(blockquote, .md-alert) + :is(blockquote, .md-alert),
+body #write :is(hr, .md-hr) + :is(hr, .md-hr) + :is(hr, .md-hr) + :is(hr, .md-hr) + :is(blockquote, .md-alert) + :is(blockquote, .md-alert) + :is(blockquote, .md-alert) + :is(blockquote, .md-alert) + :is(blockquote, .md-alert) {
+  display: inline-block;
+  vertical-align: top;
+  max-width: 19.2%;
+  min-width: 19.2%;
+  box-sizing: border-box;
+  margin: 0.35rem 0;
+}
+
+body #write :is(hr, .md-hr) + :is(hr, .md-hr) + :is(hr, .md-hr) + :is(hr, .md-hr) + :is(blockquote, .md-alert) + :is(blockquote, .md-alert),
+body #write :is(hr, .md-hr) + :is(hr, .md-hr) + :is(hr, .md-hr) + :is(hr, .md-hr) + :is(blockquote, .md-alert) + :is(blockquote, .md-alert) + :is(blockquote, .md-alert),
+body #write :is(hr, .md-hr) + :is(hr, .md-hr) + :is(hr, .md-hr) + :is(hr, .md-hr) + :is(blockquote, .md-alert) + :is(blockquote, .md-alert) + :is(blockquote, .md-alert) + :is(blockquote, .md-alert),
+body #write :is(hr, .md-hr) + :is(hr, .md-hr) + :is(hr, .md-hr) + :is(hr, .md-hr) + :is(blockquote, .md-alert) + :is(blockquote, .md-alert) + :is(blockquote, .md-alert) + :is(blockquote, .md-alert) + :is(blockquote, .md-alert) {
+  margin-left: 1% !important;
+}
+
+/* ========================================
+  Plugin UI（配合 matoujie-plugin.txt，仅导出 HTML 后生效）
+  ======================================== */
+:root {
+  --tab-active-text: #ffffff;
+}
+
+/* ---- 页签组 ---- */
+.mj-tab-bar {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  border-bottom: 1px solid var(--border-color);
+  padding-bottom: 8px;
+  margin-top: 1.5em;
+}
+
+.mj-tab-btn {
+  font-family: var(--font-body);
+  font-size: 0.85em;
+  line-height: 1;
+  padding: 0.4em 1em;
+  border: 1px solid var(--border-color);
+  border-radius: 999px;
+  background: transparent;
+  color: var(--text-muted);
+  cursor: pointer;
+  transition: var(--transition-fast);
+}
+
+.mj-tab-btn:hover {
+  color: var(--primary-color);
+  border-color: var(--primary-color);
+}
+
+.mj-tab-btn:focus-visible {
+  outline: 2px solid var(--focus-ring-color);
+  outline-offset: 2px;
+}
+
+.mj-tab-btn[aria-selected="true"] {
+  background: var(--btn-bg);
+  border-color: var(--btn-bg);
+  color: var(--tab-active-text);
+}
+
+.mj-tab-panel {
+  margin-top: 1em;
+}
+
+.mj-tab-panel:not(.mj-active) {
+  display: none;
+}
+
+/* ---- 代码块增强（复制 / 折叠） ---- */
+.mj-code {
+  position: relative;
+}
+
+.mj-code > pre {
+  position: relative;
+  margin: 1.5em 0;
+}
+
+.mj-code-copy {
+  position: absolute;
+  top: 0.6em;
+  right: 0.6em;
+  z-index: 5;
+  font-family: var(--font-body);
+  font-size: 0.72em;
+  line-height: 1;
+  padding: 0.45em 0.9em;
+  border: 1px solid var(--border-color);
+  border-radius: 999px;
+  background: var(--bg-color);
+  color: var(--text-muted);
+  cursor: pointer;
+  opacity: 0;
+  transition: var(--transition-fast);
+}
+
+.mj-code:hover .mj-code-copy,
+.mj-code-copy:focus-visible {
+  opacity: 1;
+}
+
+.mj-code-copy:hover {
+  color: var(--primary-color);
+  border-color: var(--primary-color);
+}
+
+.mj-code-copy.mj-code-copy-done {
+  color: var(--callout-tip);
+  border-color: var(--callout-tip);
+}
+
+.mj-code-toggle {
+  display: block;
+  width: 100%;
+  font-family: var(--font-body);
+  font-size: 0.75em;
+  padding: 0.4em 0;
+  border: none;
+  border-radius: 0 0 var(--radius-small) var(--radius-small);
+  background: var(--code-bg-color);
+  color: var(--text-muted);
+  cursor: pointer;
+  transition: var(--transition-fast);
+}
+
+.mj-code-toggle:hover {
+  color: var(--primary-color);
+}
+
+/* 折叠：编辑器（pre.md-fences 直接加类）与导出（wrapper 内）通用 */
+pre.mj-folded {
+  position: relative;
+  max-height: 32em;
+  overflow: hidden;
+}
+
+pre.mj-folded::after {
+  content: '';
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  height: 4.5em;
+  background: linear-gradient(180deg, transparent, var(--code-bg-color));
+  pointer-events: none;
+}
+
+/* ---- 编辑器内代码块工具按钮（matoujie-editor.js） ---- */
+pre.md-fences.mj-has-tools {
+  position: relative;
+}
+
+.mj-editor-tools {
+  position: absolute;
+  top: 0.3em;
+  right: 0.5em;
+  z-index: 5;
+  display: flex;
+  gap: 4px;
+  opacity: 0;
+  transition: var(--transition-fast);
+}
+
+pre.md-fences:hover .mj-editor-tools,
+.mj-editor-tools:hover {
+  opacity: 1;
+}
+
+/* 复用导出侧 .mj-code-copy 的视觉样式，仅在编辑器容器内覆盖定位 */
+.mj-editor-tools .mj-code-copy {
+  position: static;
+  opacity: 1;
+  border-color: var(--border-color);
+  background: var(--bg-color);
+}
+
+.mj-code-fold {
+  font-family: var(--font-body);
+  font-size: 0.72em;
+  line-height: 1;
+  padding: 0.45em 0.9em;
+  border: 1px solid var(--border-color);
+  border-radius: 999px;
+  background: var(--bg-color);
+  color: var(--text-muted);
+  cursor: pointer;
+  transition: var(--transition-fast);
+}
+
+.mj-code-fold:hover {
+  color: var(--primary-color);
+  border-color: var(--primary-color);
+}
+
+/* ---- 编辑器内页签标记提示（_^tab^_） ---- */
+#write em > sup,
+#write span[md-inline=em] sup {
+  border: 1px dashed var(--primary-color);
+  border-radius: 999px;
+  padding: 0 0.5em;
+  color: var(--primary-color);
+  opacity: 0.75;
+}
+
 /* ========================================
   Print
   ======================================== */
@@ -1136,21 +1525,75 @@ body #write .cm-s-inner .cm-error { color: var(--syntax-error-text); background:
     max-width: 100%;
   }
 
+  /* 标题不落单（不作为页面最后一个元素） */
   #write h1,
   #write h2,
-  #write h3 {
+  #write h3,
+  #write h4,
+  #write h5,
+  #write h6 {
     page-break-after: avoid;
+    break-after: avoid;
   }
 
-  #write pre,
-  #write blockquote,
-  #write table,
-  #write img {
+  /* 长代码块：允许自动换行 + 跨页，防止横向溢出裁切与内容丢失 */
+  #write pre {
+    page-break-inside: auto;
+    break-inside: auto;
+    white-space: pre-wrap;
+    overflow-wrap: break-word;
+  }
+
+  #write pre code {
+    white-space: pre-wrap;
+    overflow-wrap: break-word;
+  }
+
+  /* 长表格：允许跨页，表头在每页重复，单行不断开 */
+  #write table {
+    page-break-inside: auto;
+    break-inside: auto;
+  }
+
+  #write thead {
+    display: table-header-group;
+  }
+
+  #write tfoot {
+    display: table-footer-group;
+  }
+
+  /* 整块内容尽量不跨页（超页高时浏览器仍会强制分页，不会丢内容） */
+  #write img,
+  #write tr,
+  #write li,
+  #write blockquote {
     page-break-inside: avoid;
+    break-inside: avoid;
   }
 
   #write a[href]::before,
   .md-preview-section a[href]::before {
     content: none !important;
+  }
+
+  /* 打印时页签全部展开、隐藏页签栏与面包屑；长代码展开、隐藏复制/折叠按钮 */
+  .mj-tab-panel:not(.mj-active) {
+    display: revert !important;
+  }
+
+  .mj-tab-bar,
+  .mj-code-copy,
+  .mj-code-toggle {
+    display: none !important;
+  }
+
+  pre.mj-folded {
+    max-height: none !important;
+    overflow: visible !important;
+  }
+
+  pre.mj-folded::after {
+    display: none;
   }
 }
