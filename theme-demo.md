@@ -14,7 +14,7 @@ This is a text content style and the following are the effects of different text
 ## 2. 字体系统 / Font System
 
 **Inter** — 英文正文 / UI（Regular 400）
-The quick brown fox jumps over the lazy dog. Anthropic builds AI that is safe and beneficial — for everyone.
+The quick brown fox jumps over the lazy dog. Good typography is invisible, but great typography is memorable.
 
 **Noto Sans SC** — 中文正文（Light 300，视觉重量与 Inter Regular 对齐）
 这是一段示例文字。信息、美感与秩序，是好的排版永恒追求的三件事。简洁，并不意味着简单。
@@ -191,7 +191,7 @@ sequenceDiagram
 
 ## 12. 按钮 / Buttons
 
-语法（借鉴 VLOOK，编辑时即生效）：
+语法（编辑时即生效）：
 
 [<kbd>标准按钮</kbd>](https://github.com/) *[<kbd>次按钮</kbd>](https://github.com/)* **[<kbd>超级按钮</kbd>](https://github.com/)**
 
@@ -209,7 +209,7 @@ sequenceDiagram
 
 ## 13. 分栏排版 / Columns
 
-语法：**N 个 `---` 后跟 N+1 个连续引用块 = N+1 栏**（借鉴 VLOOK）。
+语法：**N 个 `---` 后跟 N+1 个连续引用块 = N+1 栏。
 
 双栏（1 个 `---` + 2 个引用块）：
 
@@ -265,7 +265,7 @@ sequenceDiagram
 
 > 需配合 `matoujie-plugin.txt`，**导出 HTML 后生效**，编辑器内不做转换。
 
-语法（与 VLOOK 兼容）：在连续内容（表格/插图/引用块/Callout/代码块，中间不能被标题、列表、分隔线打断）的第一个内容前，空一行写 `_^tab^_`。
+语法：在连续内容（表格/插图/引用块/Callout/代码块，中间不能被标题、列表、分隔线打断）的第一个内容前，空一行写 `_^tab^_`。
 
 _^tab^_
 

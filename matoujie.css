@@ -650,7 +650,7 @@ body #write blockquote cite {
 }
 
 /* ========================================
- UI Card Extensions (Anthropic-style)
+ UI Card Extensions (restrained style)
  ======================================== */
 
 /* ---- Feature Card (via [!IMPORTANT]) ---- */
@@ -1130,7 +1130,7 @@ body #write .cm-s-inner .cm-error { color: var(--syntax-error-text); background:
 
 /* ========================================
   Buttons & Keyboard Keys
-  语法（借鉴 VLOOK）：
+  语法：
     [<kbd>按钮</kbd>](url)      → 标准按钮（实心）
     *[<kbd>按钮</kbd>](url)     → 次按钮（描边）
     **[<kbd>按钮</kbd>](url)**  → 超级按钮（深色）
@@ -1223,7 +1223,7 @@ body #write .cm-s-inner .cm-error { color: var(--syntax-error-text); background:
 
 /* 整行只有按钮链接（含斜体/粗体包裹）时居中
    双套选择器：编辑器 DOM 有 span[md-inline]/span.md-link 包裹，导出 DOM 为 em/strong/a
-   （参照 VLOOK base.less:1025-1029） */
+   （编辑器/导出双套选择器） */
 #write p:has(> :is(span[md-inline=em], span[md-inline=strong], .md-link):only-child a kbd),
 #write p:has(> :is(span[md-inline=em], span[md-inline=strong], .md-link):first-child ~ :is(span[md-inline=em], span[md-inline=strong], .md-link):last-child a kbd),
 #write p:has(> :is(em, strong, a):only-child :is(kbd, a kbd)),
@@ -1233,7 +1233,7 @@ body #write .cm-s-inner .cm-error { color: var(--syntax-error-text); background:
 
 /* ========================================
   Column Layout (hr + blockquote 分栏)
-  语法（借鉴 VLOOK）：N 个 --- 后跟 N+1 个连续引用块/Callout = N+1 栏
+  语法：N 个 --- 后跟 N+1 个连续引用块/Callout = N+1 栏
   例：--- + 引用块A + 引用块B = 双栏
   注：选择器带 body 前缀以对齐基础引用块样式的特异性
   ======================================== */

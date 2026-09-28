@@ -12,9 +12,9 @@ Matoujie is a clean, elegant Typora theme designed by HAE. It focuses on a calm,
 - Warm color palette (Clay + Ivory) with careful attention to readability
 - **Unicode-range font isolation** — Chinese and English render with independent @font-face, no visual conflict
 - **Weight decoupling** — body text uses Inter Regular (400) for English, Noto Sans SC Light (300) for Chinese
-- Anthropic-style callout cards (Feature / Info / Stat / Quote / Danger)
-- **Button links** (inspired by VLOOK) — `[<kbd>Button</kbd>](url)` with solid / outline / dark variants; button-only lines auto-center
-- **Column layout** (inspired by VLOOK) — N `---` followed by N+1 consecutive blockquotes = 2–5 columns
+- Restrained-style callout cards (Feature / Info / Stat / Quote / Danger)
+- **Button links** — `[<kbd>Button</kbd>](url)` with solid / outline / dark variants; button-only lines auto-center
+- **Column layout** — N `---` followed by N+1 consecutive blockquotes = 2–5 columns
 - **Tab groups** (optional plugin) — `_^tab^_` marker + consecutive content, rotates display in exported HTML
 - **PDF export optimization** — long code blocks wrap and break across pages, table headers repeat per page, no orphan headings
 - Auto link icons on external links (no underline, color only)
@@ -90,7 +90,6 @@ MIT
 ## Acknowledgments
 
 - [Konayuki Theme](https://github.com/aerandirsf/Konayuki) — Base style reference
-- [VLOOK™](https://github.com/MadMaxChow/VLOOK) — Syntax design reference for button links and column layout
 - [Inter](https://rsms.me/inter/) — English typeface
 - [Noto Sans SC](https://github.com/notofonts/noto-cjk) — Chinese typeface
 - [JetBrains Mono](https://www.jetbrains.com/lp/mono/) — Code typeface

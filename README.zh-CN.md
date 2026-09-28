@@ -12,9 +12,9 @@ Matoujie 是一套由 HAE 制作的 Typora 主题，主打清爽、克制、易�
 - 温暖配色（Clay + Ivory），兼顾美感与可读性
 - **Unicode-range 字体隔离** — 中英文各自渲染，互不干扰
 - **字重解耦** — 英文用 Inter Regular (400)，中文用 Noto Sans SC Light (300)，视觉重量一致
-- Anthropic 风格 Callout 卡片（Feature / Info / Stat / Quote / Danger）
-- **按钮链接**（借鉴 VLOOK）— `[<kbd>按钮</kbd>](url)` 实心 / 斜体描边 / 粗体深色三态，整行按钮自动居中
-- **分栏排版**（借鉴 VLOOK）— N 个 `---` + N+1 个连续引用块 = 2~5 栏
+- 克制风 Callout 卡片（Feature / Info / Stat / Quote / Danger）
+- **按钮链接** — `[<kbd>按钮</kbd>](url)` 实心 / 斜体描边 / 粗体深色三态，整行按钮自动居中
+- **分栏排版** — N 个 `---` + N+1 个连续引用块 = 2~5 栏
 - **页签组**（可选插件）— `_^tab^_` 标记 + 连续内容，导出 HTML 后轮换展示
 - **PDF 导出优化** — 长代码块自动换行跨页、表格表头逐页重复、标题不落单
 - 外部链接自动显示图标（无下划线，仅颜色区分）
@@ -88,7 +88,6 @@ MIT
 ## 致谢
 
 - [Konayuki Theme](https://github.com/aerandirsf/Konayuki) — 基础样式参考
-- [VLOOK™](https://github.com/MadMaxChow/VLOOK) — 按钮链接与分栏排版的语法设计参考
 - [Inter](https://rsms.me/inter/) — 英文字体
 - [Noto Sans SC](https://github.com/notofonts/noto-cjk) — 中文字体
 - [JetBrains Mono](https://www.jetbrains.com/lp/mono/) — 代码字体

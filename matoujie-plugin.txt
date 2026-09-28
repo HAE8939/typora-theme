@@ -9,7 +9,7 @@
  *
  * 接入：Typora「偏好设置 → 导出 → HTML → 在 </body> 中添加」粘贴本文件全文即可
  *       （本文件已含 <script> 包裹；该输入框插入的是 HTML 片段，裸 JS 不会执行）。
- * 语法设计与 VLOOK™（MIT, MadMaxChow/VLOOK）兼容，实现为本主题独立轻量版。
+ * 实现为本主题独立轻量版。
  */
 (function () {
   'use strict';
@@ -203,7 +203,7 @@
     marker.parentNode.insertBefore(group, marker);
     marker.remove();
 
-    // 键盘：Tab / Shift+Tab 在页签间轮换（与 VLOOK 行为一致）
+    // 键盘：Tab / Shift+Tab 在页签间轮换
     group.addEventListener('keydown', function (e) {
       if (e.key !== 'Tab') return;
       e.preventDefault();
