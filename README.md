@@ -15,7 +15,7 @@ Matoujie is a clean, elegant Typora theme designed by HAE. It focuses on a calm,
 - Restrained-style callout cards (Feature / Info / Stat / Quote / Danger)
 - **Button links** — `[<kbd>Button</kbd>](url)` with solid / outline / dark variants; button-only lines auto-center
 - **Column layout** — N `---` followed by N+1 consecutive blockquotes = 2–5 columns
-- **Tab groups** (optional plugin) — `_^tab^_` marker + consecutive content, rotates display in exported HTML
+- **Tab groups** (optional plugin) — `*tab*` marker + consecutive content, rotates display in exported HTML
 - **PDF export optimization** — long code blocks wrap and break across pages, table headers repeat per page, no orphan headings
 - Auto link icons on external links (no underline, color only)
 - Optimized sidebar with slate-card styling
@@ -68,7 +68,7 @@ Typora does not execute theme JS inside the editor, so a one-time script injecti
 
 ## Optional Plugin 2: exported HTML enhancements
 
-> Features: tab groups (`_^tab^_` marker + consecutive content), code copy/collapse buttons in exported HTML.
+> Features: tab groups (`*tab*` marker + consecutive content), code copy/collapse buttons in exported HTML.
 
 1. Open `matoujie-plugin.txt` and copy its **entire content** (the `<script>` wrapper is already included)
 2. In Typora `Preferences` → `Export` → `HTML` → paste into the "**Add to </body>**" field

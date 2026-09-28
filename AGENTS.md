@@ -6,7 +6,7 @@
 
 - 主题本体 `matoujie.css`：@font-face（unicode-range 中西文隔离）→ `:root` 变量层 → `#write` 排版 → 各元素段。无 JS。
 - 2026-09-28 参考开源主题借鉴三项（纯 CSS，已落地）：按钮链接、分栏排版、PDF 导出优化。语法见 `theme-demo.md` 第 12~14 节。
-- 2026-09-28 二期：`matoujie-plugin.txt`（自研轻量 JS，源文件即分发文件，自带 `<script>` 包裹）提供三项导出增强：页签组（`_^tab^_` 标记）、代码块复制按钮、长代码折叠（阈值在插件顶部 CONFIG）。接入 = 复制全文粘贴到 Typora 导出设置「在 </body> 中添加」。见 `theme-demo.md` 第 15~16 节。DEFERRED：引用块内嵌页签组（仅支持正文顶层）。
+- 2026-09-28 二期：`matoujie-plugin.txt`（自研轻量 JS，源文件即分发文件，自带 `<script>` 包裹）提供三项导出增强：页签组（`*tab*` 标记）、代码块复制按钮、长代码折叠（阈值在插件顶部 CONFIG）。接入 = 复制全文粘贴到 Typora 导出设置「在 </body> 中添加」。见 `theme-demo.md` 第 15~16 节。DEFERRED：引用块内嵌页签组（仅支持正文顶层）。
 - 编辑器内代码复制/折叠：自研 `matoujie-editor.js`（源码在主题仓库，部署副本在 `D:\Typora_A\resources\`），window.html 注入 `<script src="./matoujie-editor.js" defer>`（备份在 resources/window.html.bak）。原理：MutationObserver 扫 `#write pre.md-fences`（CodeMirror 行结构，只碰外层），右上角悬浮按钮组（复制 + 超 20 行默认折叠），样式复用 matoujie.css 的 .mj-code-copy / pre.mj-folded。
 - **REJECTED** obgnail/typora_plugin（2026-09-28）：46 个模块默认全开导致 Typora 启动明显变慢，用户只需要 2 个功能 → 整体撤除（resources/plugin/ 已删，可从回收站恢复；已还原 window.html 并改注入自研脚本）。教训：编辑器增强优先自研轻量脚本。
 - **REJECTED** 导出 HTML 面包屑（2026-09-28）：已实现过底部胶囊 scrollspy，用户不需要此形态，从插件/CSS/文档全部移除。别再提。

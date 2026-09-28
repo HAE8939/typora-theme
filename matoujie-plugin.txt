@@ -3,7 +3,7 @@
  * Matoujie Plugin for Typora exported HTML
  *
  * 为 Matoujie 主题的导出 HTML 提供三项增强（编辑器内不生效）：
- *   1. 页签组 — 语法：在连续内容（表格/插图/引用块/Callout/代码块）前空一行写 _^tab^_
+ *   1. 页签组 — 语法：在连续内容（表格/插图/引用块/Callout/代码块）前空一行写 *tab*（或 _^tab^_）
  *   2. 代码块一键复制 — 代码块右上角复制按钮
  *   3. 长代码块折叠 — 超过 foldLines 行的代码块默认折叠，可展开/收起
  *
@@ -116,8 +116,9 @@
 
   function isTabMarker(el) {
     if (!el || el.nodeType !== 1 || el.tagName !== 'P') return false;
-    var text = el.textContent.trim().toLowerCase();
-    return text === 'tab' && el.querySelector('em, i, sup');
+    // 剥掉装饰符再比对：兼容 _^tab^_（em+sup）、*tab*（em）、以及上标扩展未开启时的字面 ^tab^
+    var text = el.textContent.trim().toLowerCase().replace(/[\^~*_\s]/g, '');
+    return text === 'tab';
   }
 
   function isPanelCandidate(el) {
