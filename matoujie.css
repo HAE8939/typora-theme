@@ -1209,20 +1209,27 @@ body #write .cm-s-inner .cm-error { color: var(--syntax-error-text); background:
   例：--- + 引用块A + 引用块B = 双栏
   注：选择器带 body 前缀以对齐基础引用块样式的特异性
   ======================================== */
-/* 分栏分隔线：隐藏自身与装饰符 */
-body #write :is(hr, .md-hr):has(+ :is(blockquote, .md-alert)) {
+/* ---- 分栏触发判定 ----
+   有效分栏 = 分隔线组 + 紧随其后的 ≥2 个连续引用块/Callout。
+   单个引用块（正文里「分割线 + 引言」的常见写法）不触发：
+   分隔线正常显示、引用块保持整宽。
+   组内每条分隔线都须隐藏 → 按前置 hr 条数枚举（最多 4 条 = 五栏）。
+   :where() 包裹 :has() 守卫：贡献 0 特异性，避免压过 3/4/5 栏链式规则。
+   装饰符 ✦ 无需单独处理：visibility 会被 ::after 继承。 */
+body #write :is(hr, .md-hr):where(:has(+ :is(blockquote, .md-alert) + :is(blockquote, .md-alert))),
+body #write :is(hr, .md-hr):where(:has(+ :is(hr, .md-hr) + :is(blockquote, .md-alert) + :is(blockquote, .md-alert))),
+body #write :is(hr, .md-hr):where(:has(+ :is(hr, .md-hr) + :is(hr, .md-hr) + :is(blockquote, .md-alert) + :is(blockquote, .md-alert))),
+body #write :is(hr, .md-hr):where(:has(+ :is(hr, .md-hr) + :is(hr, .md-hr) + :is(hr, .md-hr) + :is(blockquote, .md-alert) + :is(blockquote, .md-alert))),
+body #write :is(hr, .md-hr):where(:has(+ :is(hr, .md-hr) + :is(hr, .md-hr) + :is(hr, .md-hr) + :is(hr, .md-hr) + :is(blockquote, .md-alert) + :is(blockquote, .md-alert))) {
   visibility: hidden;
   border: none;
   margin: 0 !important;
   padding: 0;
 }
 
-body #write :is(hr, .md-hr):has(+ :is(blockquote, .md-alert))::after {
-  content: none;
-}
-
-/* ---- 双栏（49 * 2 + 2 = 100）---- */
-body #write :is(hr, .md-hr) + :is(blockquote, .md-alert),
+/* ---- 双栏（49 * 2 + 2 = 100）----
+   成员一须带「后面还有第二个引用块」守卫，否则单个引用块会被误判成半宽 */
+body #write :is(hr, .md-hr) + :is(blockquote, .md-alert):where(:has(+ :is(blockquote, .md-alert))),
 body #write :is(hr, .md-hr) + :is(blockquote, .md-alert) + :is(blockquote, .md-alert) {
   display: inline-block;
   vertical-align: top;
@@ -1237,7 +1244,7 @@ body #write :is(hr, .md-hr) + :is(blockquote, .md-alert) + :is(blockquote, .md-a
 }
 
 /* ---- 三栏（32 * 3 + 2 * 2 = 100）---- */
-body #write :is(hr, .md-hr) + :is(hr, .md-hr) + :is(blockquote, .md-alert),
+body #write :is(hr, .md-hr) + :is(hr, .md-hr) + :is(blockquote, .md-alert):where(:has(+ :is(blockquote, .md-alert))),
 body #write :is(hr, .md-hr) + :is(hr, .md-hr) + :is(blockquote, .md-alert) + :is(blockquote, .md-alert),
 body #write :is(hr, .md-hr) + :is(hr, .md-hr) + :is(blockquote, .md-alert) + :is(blockquote, .md-alert) + :is(blockquote, .md-alert) {
   display: inline-block;
@@ -1254,7 +1261,7 @@ body #write :is(hr, .md-hr) + :is(hr, .md-hr) + :is(blockquote, .md-alert) + :is
 }
 
 /* ---- 四栏（23.5 * 4 + 2 * 3 = 100）---- */
-body #write :is(hr, .md-hr) + :is(hr, .md-hr) + :is(hr, .md-hr) + :is(blockquote, .md-alert),
+body #write :is(hr, .md-hr) + :is(hr, .md-hr) + :is(hr, .md-hr) + :is(blockquote, .md-alert):where(:has(+ :is(blockquote, .md-alert))),
 body #write :is(hr, .md-hr) + :is(hr, .md-hr) + :is(hr, .md-hr) + :is(blockquote, .md-alert) + :is(blockquote, .md-alert),
 body #write :is(hr, .md-hr) + :is(hr, .md-hr) + :is(hr, .md-hr) + :is(blockquote, .md-alert) + :is(blockquote, .md-alert) + :is(blockquote, .md-alert),
 body #write :is(hr, .md-hr) + :is(hr, .md-hr) + :is(hr, .md-hr) + :is(blockquote, .md-alert) + :is(blockquote, .md-alert) + :is(blockquote, .md-alert) + :is(blockquote, .md-alert) {
@@ -1273,7 +1280,7 @@ body #write :is(hr, .md-hr) + :is(hr, .md-hr) + :is(hr, .md-hr) + :is(blockquote
 }
 
 /* ---- 五栏（19.2 * 5 + 1 * 4 = 100）---- */
-body #write :is(hr, .md-hr) + :is(hr, .md-hr) + :is(hr, .md-hr) + :is(hr, .md-hr) + :is(blockquote, .md-alert),
+body #write :is(hr, .md-hr) + :is(hr, .md-hr) + :is(hr, .md-hr) + :is(hr, .md-hr) + :is(blockquote, .md-alert):where(:has(+ :is(blockquote, .md-alert))),
 body #write :is(hr, .md-hr) + :is(hr, .md-hr) + :is(hr, .md-hr) + :is(hr, .md-hr) + :is(blockquote, .md-alert) + :is(blockquote, .md-alert),
 body #write :is(hr, .md-hr) + :is(hr, .md-hr) + :is(hr, .md-hr) + :is(hr, .md-hr) + :is(blockquote, .md-alert) + :is(blockquote, .md-alert) + :is(blockquote, .md-alert),
 body #write :is(hr, .md-hr) + :is(hr, .md-hr) + :is(hr, .md-hr) + :is(hr, .md-hr) + :is(blockquote, .md-alert) + :is(blockquote, .md-alert) + :is(blockquote, .md-alert) + :is(blockquote, .md-alert),

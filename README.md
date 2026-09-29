@@ -14,7 +14,7 @@ Matoujie is a clean, elegant Typora theme designed by HAE. It focuses on a calm,
 - **Weight decoupling** — body text uses Inter Regular (400) for English, Noto Sans SC Light (300) for Chinese
 - Restrained-style callout cards (Info / Tip / Feature / Warning / Danger)
 - **Button links** — `[<kbd>Button</kbd>](url)` with solid / outline / dark variants; button-only lines auto-center
-- **Column layout** — N `---` followed by N+1 consecutive blockquotes = 2–5 columns
+- **Column layout** — N `---` followed by N+1 consecutive blockquotes = 2–5 columns (needs at least 2 blockquotes; a lone blockquote after `---` stays a plain divider + full-width quote)
 - **Tab groups** (optional plugin) — `*tab*` marker + consecutive content, rotates display in exported HTML
 - **PDF export optimization** — long code blocks wrap and break across pages, table headers repeat per page, no orphan headings
 - Auto link icons on external links (no underline, color only)
